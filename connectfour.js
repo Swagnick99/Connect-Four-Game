@@ -17,7 +17,7 @@ var column = [
 
 var declare = document.querySelector(".container");
 
-function changeColor(col=column[2], turn, e) {
+function changeColor(col, turn, e) {
     var i;
     if (!full[e]) {
         for (i = 5; i >= 0; i--) {
@@ -47,11 +47,13 @@ function showTurn(turn) {
 }
 
 function game(row, col, turn) {
-    var win = true;
+    var win = false;
     var color = getComputedStyle(column[col][row]).backgroundColor;
     var r = row;
     var c = col;
+    var count = 1;
     if (r <= 2) {
+        win = true;
         r++;
         while (r < row+4) {
             if (color != getComputedStyle(column[col][r]).backgroundColor) {
@@ -60,25 +62,107 @@ function game(row, col, turn) {
             }
             r++;
         }
+        r = row;
     }
-    else if (c <= 3) {
-        while (c < col+4) {
+    if (!win) {
+        c++;
+        while ((c < col+4) && (c < 7)) {
             if (color != getComputedStyle(column[c][row]).backgroundColor) {
                 win = false;
                 break;
             }
             c++;
+            count++;
+            if (count == 4)
+                break;
         }
-    }
-    else if (c >= 3) {
-        while (c > col-4) {
+        c = col - 1;
+        while ((c > col-4) && (c > -1)) {
             if (color != getComputedStyle(column[c][row]).backgroundColor) {
                 win = false;
                 break;
             }
             c--;
+            count++;
+            if (count == 4)
+                break;
+        }
+        c = col;
+        if (count == 4) {
+            count = 0;
+            win = true;
         }
     }
+
+    if (!win) {
+        r--;
+        c++;
+        while ((r > row-4) && (c < col+4) && (r > -1) && (c < 7)) {
+            if (color != getComputedStyle(column[c][r]).backgroundColor) {
+                win = false;
+                break;
+            }
+            r--;
+            c++;
+            count++;
+            if (count == 4)
+                break;
+        }
+        r = row + 1;
+        c = col - 1;
+        while ((r < row+4) && (c > col-4) && (r < 6) && (c > -1)) {
+            if (color != getComputedStyle(column[c][r]).backgroundColor) {
+                win = false;
+                break;
+            }
+            r++;
+            c--;
+            count++;
+            if (count == 4)
+                break;
+        }
+        r = row;
+        c = col;
+        if (count == 4) {
+            count = 0;
+            win = true;
+        }
+    }
+    if (!win) {
+        r--;
+        c--;
+        while ((r > row-4) && (c > col-4) && (r > -1) && (c > -1)) {
+            if (color != getComputedStyle(column[c][r]).backgroundColor) {
+                win = false;
+                break;
+            }
+            r--;
+            c--;
+            count++;
+            if (count == 4)
+                break;
+        }
+        r = row + 1;
+        c = col + 1;
+        while ((r < row+4) && (c < col+4) && (r < 6) && (c < 7)) {
+            if (color != getComputedStyle(column[c][r]).backgroundColor) {
+                win = false;
+                break;
+            }
+            r++;
+            c++;
+            count++;
+            if (count == 4)
+                break;
+        }
+        r = row;
+        c = col;
+        if (count == 4) {
+            count = 0;
+            win = true;
+        }
+    }
+
     if (win) {
         if (turn-1)
             declare.innerHTML = "<h1>" + player2 + ", you've won the game</h1>\n<h1>Please restart the page to play again</h1>";
