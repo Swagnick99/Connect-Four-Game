@@ -90,7 +90,7 @@ function game(row, col, turn) {
         c = col;
         if (count == 4)
             win = true;
-        count = 0;
+        count = 1;
     }
 
     if (!win) {
@@ -124,7 +124,7 @@ function game(row, col, turn) {
         c = col;
         if (count == 4)
             win = true;
-        count = 0;
+        count = 1;
     }
     if (!win) {
         r--;
@@ -157,7 +157,7 @@ function game(row, col, turn) {
         c = col;
         if (count == 4)
             win = true;
-        count = 0;
+        count = 1;
     }
 
     if (win) {
