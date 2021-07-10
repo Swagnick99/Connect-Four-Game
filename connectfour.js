@@ -88,10 +88,9 @@ function game(row, col, turn) {
                 break;
         }
         c = col;
-        if (count == 4) {
-            count = 0;
+        if (count == 4)
             win = true;
-        }
+        count = 0;
     }
 
     if (!win) {
@@ -123,10 +122,9 @@ function game(row, col, turn) {
         }
         r = row;
         c = col;
-        if (count == 4) {
-            count = 0;
+        if (count == 4)
             win = true;
-        }
+        count = 0;
     }
     if (!win) {
         r--;
@@ -157,10 +155,9 @@ function game(row, col, turn) {
         }
         r = row;
         c = col;
-        if (count == 4) {
-            count = 0;
+        if (count == 4)
             win = true;
-        }
+        count = 0;
     }
 
     if (win) {
