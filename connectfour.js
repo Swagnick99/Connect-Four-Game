@@ -51,7 +51,7 @@ function game(row, col, turn) {
     var color = getComputedStyle(column[col][row]).backgroundColor;
     
     var vertcount = 1;
-    for (var i = row+1; (i <= row+3) && (i != 6); i++) {
+    for (var i = row+1; (i <= row+3) && (i < 6); i++) {
         if (color != getComputedStyle(column[col][i]).backgroundColor)
             break;
         else
@@ -59,7 +59,7 @@ function game(row, col, turn) {
     }
 
     var horicount = 0;
-    for (var j = ((col-3)<0)?0:(col-3); (j <= col+3) && (j != 7); j++) {
+    for (var j = ((col-3)<0)?0:(col-3); (j <= col+3) && (j < 7); j++) {
         if (color == getComputedStyle(column[j][row]).backgroundColor)
             horicount++;
         else
@@ -69,13 +69,13 @@ function game(row, col, turn) {
     }
 
     var pridiagcount = 1;
-    for (var i = row+1, j = col+1; (i <= row+3) && (j <= col+3) && (i != 6) && (j != 7); i++, j++) {
+    for (var i = row+1, j = col+1; (i <= row+3) && (j <= col+3) && (i < 6) && (j < 7); i++, j++) {
         if (color == getComputedStyle(column[j][i]).backgroundColor)
             pridiagcount++;
         else
             break;
     }
-    for (var i = row-1, j = col-1; (i >= row-3) && (j >= col-3) && (i != -1) && (j != -1); i--, j--) {
+    for (var i = row-1, j = col-1; (i >= row-3) && (j >= col-3) && (i > -1) && (j > -1); i--, j--) {
         if (color == getComputedStyle(column[j][i]).backgroundColor)
             pridiagcount++;
         else
@@ -83,13 +83,13 @@ function game(row, col, turn) {
     }
 
     var oppdiagcount = 1;
-    for (var i = row+1, j = col-1; (i <= row+3) && (j >= col-3) && (i != 6) && (j != -1); i++, j--) {
+    for (var i = row+1, j = col-1; (i <= row+3) && (j >= col-3) && (i < 6) && (j > -1); i++, j--) {
         if (color == getComputedStyle(column[j][i]).backgroundColor)
             oppdiagcount++;
         else
             break;
     }
-    for (var i = row-1, j = col+1; (i >= row-3) && (j <= col+3) && (i != -1) && (j != 7); i--, j++) {
+    for (var i = row-1, j = col+1; (i >= row-3) && (j <= col+3) && (i > -1) && (j < 7); i--, j++) {
         if (color == getComputedStyle(column[j][i]).backgroundColor)
             oppdiagcount++;
         else
