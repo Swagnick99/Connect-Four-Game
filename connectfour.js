@@ -89,7 +89,7 @@ function game(row, col, turn) {
         else
             break;
     }
-    for (var i = row-1, j = col+1; (i >= row-3) && (j <= col+3) && (i != -1) && (j != -7); i--, j++) {
+    for (var i = row-1, j = col+1; (i >= row-3) && (j <= col+3) && (i != -1) && (j != 7); i--, j++) {
         if (color == getComputedStyle(column[j][i]).backgroundColor)
             oppdiagcount++;
         else
