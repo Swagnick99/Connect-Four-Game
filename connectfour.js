@@ -49,116 +49,61 @@ function showTurn(turn) {
 function game(row, col, turn) {
     var win = false;
     var color = getComputedStyle(column[col][row]).backgroundColor;
-    var r = row;
-    var c = col;
-    var count = 1;
-    if (r <= 2) {
-        win = true;
-        r++;
-        while (r < row+4) {
-            if (color != getComputedStyle(column[col][r]).backgroundColor) {
-                win = false;
-                break;
-            }
-            r++;
-        }
-        r = row;
-    }
-    if (!win) {
-        c++;
-        while ((c < col+4) && (c < 7)) {
-            if (color != getComputedStyle(column[c][row]).backgroundColor) {
-                win = false;
-                break;
-            }
-            c++;
-            count++;
-            if (count == 4)
-                break;
-        }
-        c = col - 1;
-        while ((c > col-4) && (c > -1)) {
-            if (color != getComputedStyle(column[c][row]).backgroundColor) {
-                win = false;
-                break;
-            }
-            c--;
-            count++;
-            if (count == 4)
-                break;
-        }
-        c = col;
-        if (count == 4)
-            win = true;
-        count = 1;
+    
+    var vertcount = 1;
+    for (var i = row+1; (i <= row+3) && (i != 6); i++) {
+        if (color != getComputedStyle(column[col][i]).backgroundColor)
+            break;
+        else
+            vertcount++;
     }
 
-    if (!win) {
-        r--;
-        c++;
-        while ((r > row-4) && (c < col+4) && (r > -1) && (c < 7)) {
-            if (color != getComputedStyle(column[c][r]).backgroundColor) {
-                win = false;
-                break;
-            }
-            r--;
-            c++;
-            count++;
-            if (count == 4)
-                break;
-        }
-        r = row + 1;
-        c = col - 1;
-        while ((r < row+4) && (c > col-4) && (r < 6) && (c > -1)) {
-            if (color != getComputedStyle(column[c][r]).backgroundColor) {
-                win = false;
-                break;
-            }
-            r++;
-            c--;
-            count++;
-            if (count == 4)
-                break;
-        }
-        r = row;
-        c = col;
-        if (count == 4)
-            win = true;
-        count = 1;
+    var horicount = 0;
+    for (var j = ((col-3)<0)?0:(col-3); (j <= col+3) && (j != 7); j++) {
+        if (color == getComputedStyle(column[j][row]).backgroundColor)
+            horicount++;
+        else
+            horicount = 0;
+        if (horicount == 4)
+            break;
     }
-    if (!win) {
-        r--;
-        c--;
-        while ((r > row-4) && (c > col-4) && (r > -1) && (c > -1)) {
-            if (color != getComputedStyle(column[c][r]).backgroundColor) {
-                win = false;
-                break;
-            }
-            r--;
-            c--;
-            count++;
-            if (count == 4)
-                break;
-        }
-        r = row + 1;
-        c = col + 1;
-        while ((r < row+4) && (c < col+4) && (r < 6) && (c < 7)) {
-            if (color != getComputedStyle(column[c][r]).backgroundColor) {
-                win = false;
-                break;
-            }
-            r++;
-            c++;
-            count++;
-            if (count == 4)
-                break;
-        }
-        r = row;
-        c = col;
-        if (count == 4)
-            win = true;
-        count = 1;
+
+    var pridiagcount = 1;
+    for (var i = row+1, j = col+1; (i <= row+3) && (j <= col+3) && (i != 6) && (j != 7); i++, j++) {
+        if (color == getComputedStyle(column[j][i]).backgroundColor)
+            pridiagcount++;
+        else
+            break;
     }
+    for (var i = row-1, j = col-1; (i >= row-3) && (j >= col-3) && (i != -1) && (j != -1); i--, j--) {
+        if (color == getComputedStyle(column[j][i]).backgroundColor)
+            pridiagcount++;
+        else
+            break;
+    }
+
+    var oppdiagcount = 1;
+    for (var i = row+1, j = col-1; (i <= row+3) && (j >= col-3) && (i != 6) && (j != -1); i++, j--) {
+        if (color == getComputedStyle(column[j][i]).backgroundColor)
+            oppdiagcount++;
+        else
+            break;
+    }
+    for (var i = row-1, j = col+1; (i >= row-3) && (j <= col+3) && (i != -1) && (j != -7); i--, j++) {
+        if (color == getComputedStyle(column[j][i]).backgroundColor)
+            oppdiagcount++;
+        else
+            break;
+    }
+
+    if (vertcount == 4)
+        win = true;
+    else if (horicount >= 4)
+        win = true;
+    else if (pridiagcount >= 4)
+        win = true;
+    else if (oppdiagcount >= 4)
+        win = true;
 
     if (win) {
         if (turn-1)
